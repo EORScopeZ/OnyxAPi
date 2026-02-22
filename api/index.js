@@ -1,9 +1,3 @@
-if (path === "/") {
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end("ONYX SYSTEM ONLINE");
-  return;
-}
-
 const getkey = require("../handlers/getkey");
 const claim = require("../handlers/claim");
 const validate = require("../handlers/validate");
@@ -11,6 +5,7 @@ const validateUser = require("../handlers/validate-user");
 const whitelist = require("../handlers/whitelist");
 const revoke = require("../handlers/revoke");
 const blacklist = require("../handlers/blacklist");
+const unblacklist = require("../handlers/unblacklist");
 const listWhitelist = require("../handlers/list-whitelist");
 const status = require("../handlers/status");
 const registerOnyx = require("../handlers/register-onyx-user");
@@ -23,6 +18,13 @@ module.exports = function handler(req, res) {
   const url = req.url || "/";
   const path = url.split("?")[0];
 
+  // 🔥 REQUIRED FOR RAILWAY
+  if (path === "/") {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("ONYX SYSTEM ONLINE");
+    return;
+  }
+
   if (path === "/getkey") return getkey(req, res);
   if (path === "/claim") return claim(req, res);
   if (path === "/validate") return validate(req, res);
@@ -30,7 +32,7 @@ module.exports = function handler(req, res) {
   if (path === "/whitelist") return whitelist(req, res);
   if (path === "/revoke") return revoke(req, res);
   if (path === "/blacklist") return blacklist(req, res);
-  if (path === "/unblacklist") return blacklist(req, res);
+  if (path === "/unblacklist") return unblacklist(req, res);
   if (path === "/list-whitelist") return listWhitelist(req, res);
   if (path === "/register-onyx-user") return registerOnyx(req, res);
   if (path === "/nametags") return nametags(req, res);
