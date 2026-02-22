@@ -1,31 +1,27 @@
 const http = require("http");
-const fs = require("fs");
-const path = require("path");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
-const routes = {};
-const apiDir = path.join(__dirname, "api");
-fs.readdirSync(apiDir).forEach((file) => {
-  if (file.startsWith("_") || !file.endsWith(".js")) return;
-  const name = "/" + file.replace(".js", "");
-  routes[name] = require(path.join(apiDir, file));
-});
+// Load the main router from api/index.js
+const router = require("./api/index.js");
 
 const server = http.createServer((req, res) => {
-  const urlPath = req.url.split("?")[0];
-  const topLevel = "/" + urlPath.split("/")[1];
-  const handler = routes[urlPath] || routes[topLevel] || routes["/index"];
+  // Add CORS headers (optional but good for frontend testing)
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, x-server-secret");
 
-  if (handler) {
-    handler(req, res);
-  } else {
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ error: "Not found." }));
+  if (req.method === "OPTIONS") {
+    res.writeHead(204);
+    res.end();
+    return;
   }
+
+  // Pass every request to api/index.js handler
+  router(req, res);
 });
 
-server.listen(PORT, '0.0.0.0', () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`[Onyx] API running on http://0.0.0.0:${PORT}`);
 });
