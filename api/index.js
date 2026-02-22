@@ -1,3 +1,9 @@
+if (path === "/") {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("ONYX SYSTEM ONLINE");
+  return;
+}
+
 const getkey = require("../handlers/getkey");
 const claim = require("../handlers/claim");
 const validate = require("../handlers/validate");
