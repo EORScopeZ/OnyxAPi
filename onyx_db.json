@@ -1,0 +1,24 @@
+{
+  "records": {
+    "key:ONYX-AP2F-EQ0A-3YOT-P7E6": {
+      "value": {
+        "key": "ONYX-AP2F-EQ0A-3YOT-P7E6",
+        "type": "temp",
+        "created_at": 1771727540,
+        "expires_at": 1771900340,
+        "roblox_user": null,
+        "used_by": null
+      },
+      "_expiresAt": 1771903940805,
+      "_updatedAt": 1771727540805
+    },
+    "claim:ip:::1": {
+      "value": {
+        "claimed_at": 1771727540,
+        "key": "ONYX-AP2F-EQ0A-3YOT-P7E6"
+      },
+      "_expiresAt": 1771900340805,
+      "_updatedAt": 1771727540805
+    }
+  }
+}
